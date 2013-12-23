@@ -125,17 +125,21 @@
 
                 for (j = 0; j < arrCSSEle.length; j++) {
                     var slash = path[keys[i]].substr(path[keys[i]].length - 1, path[keys[i]].length) === "/" ? "" : "/";
-                    var extension = arrCSSEle[j].substr(arrCSSEle[j].length - 3, arrCSSEle[j].length) === ".css" ? "" : ".css";
+                    var extension = ".css";
+                    
+                    if (arrCSSEle[j].substr(arrCSSEle[j].length - 4, arrCSSEle[j].length) === ".css" || arrCSSEle[j].substr(arrCSSEle[j].length - 5, arrCSSEle[j].length) === ".less") {
+                        extension = "";
+                    }
+                    
                     var source = path[keys[i]] + slash + arrCSSEle[j] + extension;
                     
                     if (i !== keys.length - 1 || j !== arrCSSEle.length - 1 || (typeof callback !== "function")) {
-                        this.loadCSS(source);
+                        this.loadCSS(source, extension);
                     } else {
-                        this.loadCSS(source, callback);
+                        this.loadCSS(source, extension, callback);
                     }
                 }
-                
-                
+                  
             }
             
         },
@@ -157,10 +161,16 @@
             }
         },
         
-        loadCSS : function (source, done) {
+        loadCSS : function (source, extension, done) {
             var cssEle = document.createElement("link");
             cssEle.setAttribute("rel", "stylesheet");
-            cssEle.setAttribute("type", "text/css");
+            
+            if (extension === ".css") {
+                cssEle.setAttribute("type", "text/css");
+            } else {
+                cssEle.setAttribute("type", "text/less");
+            }
+            
             cssEle.setAttribute("href", source);
 			cssEle.async = false;
 			
