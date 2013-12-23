@@ -11,7 +11,7 @@
 (function (w, doc, un) {
     "use strict";
     
-    var JSImport = {
+    var Yo = {
         
         init : function (options, callback, type) {
             var defaults = {
@@ -178,23 +178,27 @@
         
     };
     
-	w.yo = w.yo || {};
+	w.yo = w.yo || {
+        ver : "0.1"
+    };
     
-    w.yo = {
+    w.yo.core = w.yo.core || {};
+    
+    w.yo.core = {
         config : function (options, callback) {
-            JSImport.init(options, callback, "all");
+            Yo.init(options, callback, "all");
         },
         loadScript: function (source, callback) {
             var options = {
                 importScript: {}
             };
-            JSImport.init(options, callback, "js");
+            Yo.init(options, callback, "js");
         },
         loadCSS: function (source, callback) {
 			var options = {
                 importScript: {}
             };
-            JSImport.init(options, callback, "css");
+            Yo.init(options, callback, "css");
         }
     };
     
