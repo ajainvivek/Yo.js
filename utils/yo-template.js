@@ -14,7 +14,7 @@
 
     yo.utils.template = yo.utils.template || {};
 
-    var baseURL = "../application/views/app_admin/js/app/templates/";
+    var baseURL = "";
     
     //Set the base URL for template class
     var setBaseURL = function (url) {
@@ -34,9 +34,11 @@
             ele: ele,
             template: template
         };
-
+        
+        var cacheId = cacheObj.uid;
         var setCache = true;
         var i;
+        
         cachedDOM.cache = cachedDOM.cache || {};
 
         if (cachedDOM.cache[root] === null || cachedDOM.cache[root] === undefined) {
@@ -44,6 +46,7 @@
         } else {
             for (i = 0; i < cachedDOM.cache[root].length; i++) {
                 if (cachedDOM.cache[root][i].ele === ele) {
+                    cacheId = cachedDOM.cache[root][i].uid;
                     setCache = false;
                 }
             }
@@ -52,8 +55,10 @@
         if (setCache) {
             cachedDOM.cache[root].push(cacheObj);
         }
-
-        return setCache;
+        
+        return {
+            uid : cacheId
+        };
     };
 
     //Fetch the HTML Template
@@ -147,8 +152,8 @@
 
 
         return {
-            uid: uid,
-            template: template
+            uid: cacheDOM.uid,
+            template: defaults.template
         };
 
     };
@@ -217,7 +222,19 @@
 
         } else {
             if (defaults.ele.charAt(0) === "#" || defaults.ele.charAt(0) === ".") {
+                
+                for (i = 0; i < keys.length; i++) {
+                    for (j = 0; j < cachedDom[keys[i]].length; j++) {
+                        if (defaults.ele === cachedDom[keys[i]][j].ele) {
+                            cachedDom[keys[i]].splice(j, 1); //Remove from cache
+                        }
+                    }
+                }
+                
                 $(defaults.ele).remove();
+                
+            } else {
+                console.error("Error: Incorrect reference - pass class or id only.");
             }
         }
 
