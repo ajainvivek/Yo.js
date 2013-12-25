@@ -160,7 +160,7 @@
         }
         
         var oRef = {
-            uid: cacheDOM.uid,
+            uid: ("[uid='" + cacheDOM.uid + "']"),
             template: defaults.template,
             ele: defaults.ele
         };
@@ -170,7 +170,11 @@
         }
 
 
-        return oRef;
+        return {
+            uid: cacheDOM.uid,
+            template: defaults.template,
+            ele: defaults.ele
+        };
 
     };
 
