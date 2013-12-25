@@ -130,13 +130,26 @@
         $("#templateBuilder").remove();
 
         var hiddenEle = $("body").append("<div id='templateBuilder' style='display:none;'></div>");
-        var ele = "";
-
-        if (defaults.ele.charAt(0) === "#" || defaults.ele.charAt(0) === ".") {
-            ele = $("#templateBuilder").html(html).find(defaults.ele); //Insert into the dom
-            ele.first().attr("uid", cacheDOM.uid);
+        var ele = [];
+        var arrEl = [];
+        
+        if (defaults.ele instanceof Array) {
+            for (i = 0; i < defaults.ele.length; i++) {
+                if (defaults.ele[i].charAt(0) === "#" || defaults.ele[i].charAt(0) === ".") {
+                    arrEl = $("#templateBuilder").html(html).find(defaults.ele[i]); //Insert into the dom
+                    arrEl.first().attr("uid", cacheDOM.uid);
+                    ele.push(arrEl[0]);
+                } else {
+                    console.error("Error: Incorrect reference - pass class or id only.");
+                }
+            }
         } else {
-            console.error("Error: Incorrect reference - pass class or id only.");
+            if (defaults.ele.charAt(0) === "#" || defaults.ele.charAt(0) === ".") {
+                ele = $("#templateBuilder").html(html).find(defaults.ele); //Insert into the dom
+                ele.first().attr("uid", cacheDOM.uid);
+            } else {
+                console.error("Error: Incorrect reference - pass class or id only.");
+            }
         }
 
 
@@ -145,16 +158,19 @@
         } else {
             $(defaults.root).append(ele);
         }
+        
+        var oRef = {
+            uid: cacheDOM.uid,
+            template: defaults.template,
+            ele: defaults.ele
+        };
 
         if (typeof callback === "function") {
-            callback(); // Execute callback function
+            callback(oRef); // Execute callback function
         }
 
 
-        return {
-            uid: cacheDOM.uid,
-            template: defaults.template
-        };
+        return oRef;
 
     };
 
