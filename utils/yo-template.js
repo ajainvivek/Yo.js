@@ -134,7 +134,7 @@
 
         if (defaults.ele.charAt(0) === "#" || defaults.ele.charAt(0) === ".") {
             ele = $("#templateBuilder").html(html).find(defaults.ele); //Insert into the dom
-            ele.first().attr("uid", uid);
+            ele.first().attr("uid", cacheDOM.uid);
         } else {
             console.error("Error: Incorrect reference - pass class or id only.");
         }
