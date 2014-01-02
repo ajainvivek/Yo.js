@@ -51,12 +51,63 @@
 
 <p>Tested and supported browsers IE 9+, Mozilla, Chrome.    </p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h3>
+<a name="usage--apis" class="anchor" href="#usage--apis"><span class="octicon octicon-link"></span></a>Usage &amp; API's</h3>
+
+<ol>
+<li>Setup configuration to include js and css files</li>
+</ol><p>`
+yo.core.config({</p>
+
+<pre><code>    // Sets the root folder as the base directory for all future relative paths
+    baseUrl: "",
+
+    // Set the namespace for the application
+    namespace: "App",
+
+    // 3rd party script alias names (Easier to type "jquery" than "libs/jquery, etc")
+    path: {
+        model: "js/app/model",
+        view: "js/app/view",
+        controller: "js/app/controller",
+        libs: "js/libs",
+        styles: "css"
+    },
+
+    //Load JS files
+    loadScript: {
+        libs: ["jquery"],
+        model: ["sample"],
+        view: ["sample"],
+        controller: ["sample"]
+    },
+
+    //Load CSS &amp; LESS file
+    loadCSS: {
+        styles: ["style", "style.less"]
+    }
+
+}, function () {
+   //Callback function once files are loaded
+   console.log(App, "Namespace is defined"); 
+   //(Define Class) App.model.sample, App.view.sample, App.controller.sample 
+});
 </code></pre>
 
-<h3>
+<p>`</p>
+
+<ul>
+<li><h3>
+<a name="baseurl---sets-the-root-folder-as-the-base-directory-for-all-future-relative-paths-modify-to-your-respective-root-path" class="anchor" href="#baseurl---sets-the-root-folder-as-the-base-directory-for-all-future-relative-paths-modify-to-your-respective-root-path"><span class="octicon octicon-link"></span></a>baseURL - Sets the root folder as the base directory for all future relative paths. Modify to your respective root path.</h3></li>
+<li><h3>
+<a name="namespace---defines-the-namespace-for-your-application" class="anchor" href="#namespace---defines-the-namespace-for-your-application"><span class="octicon octicon-link"></span></a>namespace - Defines the namespace for your application.</h3></li>
+<li><h3>
+<a name="path---define-your-path-name-or-alias-name-for-respective-folders" class="anchor" href="#path---define-your-path-name-or-alias-name-for-respective-folders"><span class="octicon octicon-link"></span></a>path - Define your path name or alias name for respective folders.</h3></li>
+<li><h3>
+<a name="loadscript---include-the-js-files-in-its-hierarchy-the-property-name-is-mapped-to-the-path-and-the-namespace-such-as-appmodel-appview-appcontroller-we-can-also-provide-the-extension-but-its-not-mandatory" class="anchor" href="#loadscript---include-the-js-files-in-its-hierarchy-the-property-name-is-mapped-to-the-path-and-the-namespace-such-as-appmodel-appview-appcontroller-we-can-also-provide-the-extension-but-its-not-mandatory"><span class="octicon octicon-link"></span></a>loadScript - Include the js files in its hierarchy. The property name is mapped to the path and the namespace such as (App.Model, App.View, App.Controller). We can also provide the extension but its not mandatory.</h3></li>
+<li><h3>
+<a name="loadcss---include-the-css-and-less-files-in-its-hierarchy" class="anchor" href="#loadcss---include-the-css-and-less-files-in-its-hierarchy"><span class="octicon octicon-link"></span></a>loadCSS - Include the css and less files in its hierarchy.</h3></li>
+</ul><h3>
 <a name="author-and-contributors" class="anchor" href="#author-and-contributors"><span class="octicon octicon-link"></span></a>Author and Contributors</h3>
 
 <p>Author - Ajain Vivek (<a href="https://github.com/ajainvivek" class="user-mention">@ajainvivek</a>)
