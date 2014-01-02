@@ -1,36 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Yo.js : Yo.js is an open source framework to build or structure modular javascript " />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Yo.js by ajainvivek</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Yo.js</title>
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/ajainvivek/Yo.js">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/ajainvivek/Yo.js/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/ajainvivek/Yo.js/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/ajainvivek/Yo.js">View on GitHub</a>
+    <div class="wrapper">
 
-          <h1 id="project_title">Yo.js</h1>
-          <h2 id="project_tagline">Yo.js is an open source framework to build or structure modular javascript </h2>
+      <section>
+        <div id="title">
+          <h1>Yo.js</h1>
+          <p>Yo.js is an open source framework to modularize your javascript and css code.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/ajainvivek">ajainvivek</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/ajainvivek/Yo.js/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/ajainvivek/Yo.js/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
         <h3>
 <a name="welcome-to-yojs" class="anchor" href="#welcome-to-yojs"><span class="octicon octicon-link"></span></a>Welcome to Yo.js.</h3>
 
@@ -55,38 +62,38 @@
 <a name="usage--apis" class="anchor" href="#usage--apis"><span class="octicon octicon-link"></span></a>Usage &amp; API's</h3>
 
 <ol>
-<li>Setup configuration to include js and css files</li>
-</ol><p>`</p>
+<li>
+<p>Setup configuration to include js and css files</p>
 
-<p>yo.core.config({</p>
+<pre><code>yo.core.config({
 
-<pre><code>    // Sets the root folder as the base directory for all future relative paths
-    baseUrl: "",
+   // Sets the root folder as the base directory for all future relative paths
+   baseUrl: "",
 
-    // Set the namespace for the application
-    namespace: "App",
+   // Set the namespace for the application
+   namespace: "App",
 
-    // 3rd party script alias names (Easier to type "jquery" than "libs/jquery, etc")
-    path: {
-        model: "js/app/model",
-        view: "js/app/view",
-        controller: "js/app/controller",
-        libs: "js/libs",
-        styles: "css"
-    },
+   // 3rd party script alias names (Easier to type "jquery" than "libs/jquery, etc")
+   path: {
+       model: "js/app/model",
+       view: "js/app/view",
+       controller: "js/app/controller",
+       libs: "js/libs",
+       styles: "css"
+   },
 
-    //Load JS files
-    loadScript: {
-        libs: ["jquery"],
-        model: ["sample"],
-        view: ["sample"],
-        controller: ["sample"]
-    },
+   //Load JS files
+   loadScript: {
+       libs: ["jquery"],
+       model: ["sample"],
+       view: ["sample"],
+       controller: ["sample"]
+   },
 
-    //Load CSS &amp; LESS file
-    loadCSS: {
-        styles: ["style", "style.less"]
-    }
+   //Load CSS &amp; LESS file
+   loadCSS: {
+       styles: ["style", "style.less"]
+   }
 
 }, function () {
    //Callback function once files are loaded
@@ -94,20 +101,13 @@
    //(Define Class) App.model.sample, App.view.sample, App.controller.sample 
 });
 </code></pre>
-
-<p>`</p>
-
-<ul>
-<li><h3>
-<a name="baseurl---sets-the-root-folder-as-the-base-directory-for-all-future-relative-paths-modify-to-your-respective-root-path" class="anchor" href="#baseurl---sets-the-root-folder-as-the-base-directory-for-all-future-relative-paths-modify-to-your-respective-root-path"><span class="octicon octicon-link"></span></a>baseURL - Sets the root folder as the base directory for all future relative paths. Modify to your respective root path.</h3></li>
-<li><h3>
-<a name="namespace---defines-the-namespace-for-your-application" class="anchor" href="#namespace---defines-the-namespace-for-your-application"><span class="octicon octicon-link"></span></a>namespace - Defines the namespace for your application.</h3></li>
-<li><h3>
-<a name="path---define-your-path-name-or-alias-name-for-respective-folders" class="anchor" href="#path---define-your-path-name-or-alias-name-for-respective-folders"><span class="octicon octicon-link"></span></a>path - Define your path name or alias name for respective folders.</h3></li>
-<li><h3>
-<a name="loadscript---include-the-js-files-in-its-hierarchy-the-property-name-is-mapped-to-the-path-and-the-namespace-such-as-appmodel-appview-appcontroller-we-can-also-provide-the-extension-but-its-not-mandatory" class="anchor" href="#loadscript---include-the-js-files-in-its-hierarchy-the-property-name-is-mapped-to-the-path-and-the-namespace-such-as-appmodel-appview-appcontroller-we-can-also-provide-the-extension-but-its-not-mandatory"><span class="octicon octicon-link"></span></a>loadScript - Include the js files in its hierarchy. The property name is mapped to the path and the namespace such as (App.Model, App.View, App.Controller). We can also provide the extension but its not mandatory.</h3></li>
-<li><h3>
-<a name="loadcss---include-the-css-and-less-files-in-its-hierarchy" class="anchor" href="#loadcss---include-the-css-and-less-files-in-its-hierarchy"><span class="octicon octicon-link"></span></a>loadCSS - Include the css and less files in its hierarchy.</h3></li>
+</li>
+</ol><ul>
+<li><p><strong>baseURL</strong> - Sets the root folder as the base directory for all future relative paths. Modify to your respective root path.</p></li>
+<li><p><strong>namespace</strong> - Defines the namespace for your application. </p></li>
+<li><p><strong>path</strong> - Define your path name or alias name for respective folders.</p></li>
+<li><p><strong>loadScript</strong> - Include the js files in its hierarchy. The property name is mapped to the path and the namespace such as (App.Model, App.View, App.Controller). We can also provide the extension but its not mandatory.</p></li>
+<li><p><strong>loadCSS</strong> - Include the css and less files in its hierarchy. </p></li>
 </ul><h3>
 <a name="author-and-contributors" class="anchor" href="#author-and-contributors"><span class="octicon octicon-link"></span></a>Author and Contributors</h3>
 
@@ -119,17 +119,9 @@ Contributors - Ajain Vivek (<a href="https://github.com/ajainvivek" class="user-
 
 <p>For any queries you can reach me out @ <a href="mailto:ajainvivek07@gmail.com">ajainvivek07@gmail.com</a> or go ahead report an issue at Github issue pages.</p>
       </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Yo.js maintained by <a href="https://github.com/ajainvivek">ajainvivek</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
     </div>
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
-
   </body>
 </html>
