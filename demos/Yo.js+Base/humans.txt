@@ -1,0 +1,15 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    <Ajain Vivek> -- <Frontend Developer> -- <@ajainvivek>
+
+# THANKS
+
+    <Alex Netkachov - http://alexatnet.com/articles/model-view-controller-mvc-javascript>
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3
+    Yo.js, jQuery
