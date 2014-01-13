@@ -1,44 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Yo.js by ajainvivek</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
     <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <title>Yo.js by ajainvivek</title>
   </head>
+
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/ajainvivek/Yo.js">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/ajainvivek/Yo.js/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/ajainvivek/Yo.js/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
+    <div id="container">
+      <div class="inner">
 
-    <div class="wrapper">
-
-      <section>
-        <div id="title">
+        <header>
           <h1>Yo.js</h1>
-          <p>Yo.js is an open source framework to modularize your javascript and css code.</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/ajainvivek">ajainvivek</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
+          <h2>Yo.js is an open source framework to modularize your javascript and css code.</h2>
+        </header>
 
-        <h3>
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/ajainvivek/Yo.js/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ajainvivek/Yo.js/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ajainvivek/Yo.js" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h3>
 <a name="welcome-to-yojs" class="anchor" href="#welcome-to-yojs"><span class="octicon octicon-link"></span></a>Welcome to Yo.js.</h3>
 
 <p>Yo.js is an open source framework to structure your javascript code base by following your own design pattern. It provides a maintainable code base for developers to focus on optimizing and develop a clean solution. It also comes with add on templating utility library to structure your DOM in an organised way.</p>
@@ -65,41 +58,41 @@
 <li>
 <p>Setup configuration to include js and css files</p>
 
-<pre><code>yo.core.config({
+<pre><code>    yo.core.config({
 
-   // Sets the root folder as the base directory for all future relative paths
-   baseUrl: "",
+       // Sets the root folder as the base directory for all future relative paths
+       baseUrl: "",
 
-   // Set the namespace for the application
-   namespace: "App",
+       // Set the namespace for the application
+       namespace: "App",
 
-   // 3rd party script alias names (Easier to type "jquery" than "libs/jquery, etc")
-   path: {
-       model: "js/app/model",
-       view: "js/app/view",
-       controller: "js/app/controller",
-       libs: "js/libs",
-       styles: "css"
-   },
+       // 3rd party script alias names (Easier to type "jquery" than "libs/jquery, etc")
+       path: {
+           model: "js/app/model",
+           view: "js/app/view",
+           controller: "js/app/controller",
+           libs: "js/libs",
+           styles: "css"
+       },
 
-   //Load JS files
-   loadScript: {
-       libs: ["jquery"],
-       model: ["sample"],
-       view: ["sample"],
-       controller: ["sample"]
-   },
+       //Load JS files
+       loadScript: {
+           libs: ["jquery"],
+           model: ["sample"],
+           view: ["sample"],
+           controller: ["sample"]
+       },
 
-   //Load CSS &amp; LESS file
-   loadCSS: {
-       styles: ["style", "style.less"]
-   }
+       //Load CSS &amp; LESS file
+       loadCSS: {
+           styles: ["style", "style.less"]
+       }
 
-}, function () {
-   //Callback function once files are loaded
-   console.log(App, "Namespace is defined"); 
-   //(Define Class) App.model.sample, App.view.sample, App.controller.sample 
-});
+    }, function () {
+       //Callback function once files are loaded
+       console.log(App, "Namespace is defined"); 
+       //(Define Class) App.model.sample, App.view.sample, App.controller.sample 
+    });
 </code></pre>
 </li>
 </ol><ul>
@@ -109,6 +102,113 @@
 <li><p><strong>loadScript</strong> - Include the js files in its hierarchy. The property name is mapped to the path and the namespace such as (App.Model, App.View, App.Controller). We can also provide the extension but its not mandatory.</p></li>
 <li><p><strong>loadCSS</strong> - Include the css and less files in its hierarchy. </p></li>
 </ul><h3>
+<a name="yo-templating-library-usage" class="anchor" href="#yo-templating-library-usage"><span class="octicon octicon-link"></span></a>Yo Templating Library Usage</h3>
+
+<p>Yo.js comprises of stand alone light weight templating library similar to moustache or handlebar with simple and easy to feature to keep your DOM away from your javascript code.</p>
+
+<p><strong>1. Inserting Div Section from HTML Template</strong></p>
+
+<p>a) Sample HTML Template</p>
+
+<pre><code>&lt;div class="test"&gt; Show this div section. &lt;/div&gt;
+&lt;div class="test2"&gt; Not to be displayed &lt;/div&gt;
+</code></pre>
+
+<p>b) Add test class from the above template</p>
+
+<pre><code> var insert = yo.utils.template.add({
+       ele : ".test", // div section to be appended
+       root : ".hero", // parent DOM reference to be append / default body
+       template : "test.html", // template file to be included
+       mode : "append" // default is "append" / "insert" 
+}, function () {
+    console.log("callback executed once div is appended");
+});       
+</code></pre>
+
+<p><strong>2. Bind JSON data to the template</strong></p>
+
+<p>a) Sample HTML template</p>
+
+<pre><code>&lt;div id="test3"&gt;&lt;strong&gt;{name}&lt;/strong&gt; is working at {company} for {years}.&lt;/div&gt;
+</code></pre>
+
+<p><strong>NOTE</strong> : Curly braces "{ }" refers to the variable </p>
+
+<p>b) Bind JSON data to the template</p>
+
+<pre><code>var jsonData = {
+    name : "John",
+    company: "SocioMobilePlus",
+    years: 1
+};
+
+var test3 = yo.utils.template.add({
+    ele: "#test3",
+    root: ".hero",
+    template: "test.html", // template file to be included 
+        mode : "insert", // inserts the div or container 
+    data: {
+        name: jsonData.name,
+        company: jsonData.company,
+        years: jsonData.years
+    }
+}, function () {
+    console.log("callback executed once div is appended / inserted");
+});
+</code></pre>
+
+<p><strong>3. Bind array of data</strong></p>
+
+<p>a) Sample HTML Template</p>
+
+<pre><code>&lt;div class="test4"&gt; {slno}.{name} is present today.&lt;/div&gt;
+</code></pre>
+
+<p>b) Bind array of data from service layer</p>
+
+<pre><code>var namesArray = [{slno: 1, name: "Ajain"}, {slno: 2, name: "Vivek"}];
+
+var test5 = yo.utils.template.add({
+    ele : ".test4",
+    root : ".hero",
+    template: "test.html",
+    data: namesArray // Bind array of data
+}, function () {
+    console.log("callback executed once div is appended / inserted");
+});
+</code></pre>
+
+<p><strong>4. Remove the container from the DOM</strong></p>
+
+<p>Remove method removes the element or container from DOM but not from the cache</p>
+
+<pre><code>yo.utils.template.remove({
+    uid: test.uid or "#ele / .class" // uid refers to the unique dom id while adding the element on DOM 
+}, function () {
+        console.log("callback executed once div is removed"); 
+});
+</code></pre>
+
+<p>**5. Destroy the container from the DOM **</p>
+
+<p>Destroy method removes the element or container from DOM and from the cache memory</p>
+
+<pre><code>yo.utils.template.destroy({
+    uid: test.uid or "#ele / .class" // uid refers to the unique dom id while adding the element on DOM 
+}, function () {
+        console.log("callback executed once div is destroyed"); 
+});
+</code></pre>
+
+<p><strong>6. Fetch Cached DOM</strong></p>
+
+<p>Cached DOM elements can be later used for adding elements on to the DOM. Cached elements drastically boosts the performance to add/ remove container.</p>
+
+<pre><code>console.log(yo.utils.template.cache());
+</code></pre>
+
+<h3>
 <a name="author-and-contributors" class="anchor" href="#author-and-contributors"><span class="octicon octicon-link"></span></a>Author and Contributors</h3>
 
 <p>Author - Ajain Vivek (<a href="https://github.com/ajainvivek" class="user-mention">@ajainvivek</a>)
@@ -118,10 +218,15 @@ Contributors - Ajain Vivek (<a href="https://github.com/ajainvivek" class="user-
 <a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
 <p>For any queries you can reach me out @ <a href="mailto:ajainvivek07@gmail.com">ajainvivek07@gmail.com</a> or go ahead report an issue at Github issue pages.</p>
-      </section>
+        </section>
 
+        <footer>
+          Yo.js is maintained by <a href="https://github.com/ajainvivek">ajainvivek</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
   </body>
 </html>
