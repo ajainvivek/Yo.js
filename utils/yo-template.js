@@ -10,6 +10,7 @@
 (function (w, doc, un) {
     "use strict";
     
+	window.yo = window.yo || {};
     window.yo.utils = window.yo.utils || {};
 
     yo.utils.template = yo.utils.template || {};
