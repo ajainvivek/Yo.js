@@ -16,19 +16,20 @@
     yo.utils.template = yo.utils.template || {};
 
     var baseURL = "";
+	var setBaseURL, getBaseURL, cachedDOM, fetchHTML, addElements, add, remove, destroy, cache;
     
     //Set the base URL for template class
-    var setBaseURL = function (url) {
+    setBaseURL = function (url) {
         baseURL = url;
     };
     
     //Get the base URL
-    var getBaseURL = function () {
+    getBaseURL = function () {
         return baseURL;
     };
 
     //Cache the dom reference
-    var cachedDOM = function (uid, root, ele, template) {
+    cachedDOM = function (uid, root, ele, template) {
 
         var cacheObj = {
             uid: uid,
@@ -63,7 +64,7 @@
     };
 
     //Fetch the HTML Template
-    var fetchHTML = function (fileRef) {
+    fetchHTML = function (fileRef) {
         var ele = "";
         var url = baseURL + fileRef;
         $.ajax({
@@ -95,9 +96,11 @@
 
         return vals;
     };
+	
+	
 
     //Add the element on to the dom
-    var add = function (options, callback) {
+    add = function (options, callback) {
 
         var defaults = {
             root: options.root || "body",
@@ -107,85 +110,112 @@
             mode: options.mode || "append",
             data: options.data || {}
         };
+		
+		if (defaults.data instanceof Array) {
+			addElements(options, callback);
+		} else {
+			var uid = (new Date()).getTime();
 
-        var uid = (new Date()).getTime();
+			var keys = Object.keys(defaults.data);
+			var html = fetchHTML(defaults.template);
+			var template = html;
+			var arrValues = getValues(html);
+			var i, j;
+	
+			var cacheDOM = cachedDOM(uid, defaults.root, defaults.ele, defaults.template);
+	
+			//Set the data value for dom element
+			for (i = 0; i < arrValues.length; i++) {
+				for (j = 0; j < keys.length; j++) {
+					if (arrValues[i] === keys[j]) {
+						html = html.replace("{" + keys[j] + "}", defaults.data[keys[j]]);
+					}
+				}
+			}
+	
+			//Remove Hidden Element if it exists in the DOM
+			$("#templateBuilder").remove();
+	
+			var hiddenEle = $("body").append("<div id='templateBuilder' style='display:none;'></div>");
+			var ele = [];
+			var arrEl = [];
+			
+			if (defaults.ele instanceof Array) {
+				for (i = 0; i < defaults.ele.length; i++) {
+					if (defaults.ele[i].charAt(0) === "#" || defaults.ele[i].charAt(0) === ".") {
+						arrEl = $("#templateBuilder").html(html).find(defaults.ele[i]); //Insert into the dom
+						arrEl.first().attr("uid", cacheDOM.uid);
+						ele.push(arrEl[0]);
+					} else {
+						console.error("Error: Incorrect reference - pass class or id only.");
+					}
+				}
+			} else {
+				if (defaults.ele.charAt(0) === "#" || defaults.ele.charAt(0) === ".") {
+					ele = $("#templateBuilder").html(html).find(defaults.ele); //Insert into the dom
+					ele.first().attr("uid", cacheDOM.uid);
+				} else {
+					console.error("Error: Incorrect reference - pass class or id only.");
+				}
+			}
+	
+	
+			if (defaults.mode === "insert") {
+				$(defaults.root).html(ele);
+			} else {
+				$(defaults.root).append(ele);
+			}
+			
+			var oRef = {
+				uid: ("[uid='" + cacheDOM.uid + "']"),
+				template: defaults.template,
+				ele: defaults.ele
+			};
+	
+			if (typeof callback === "function") {
+				callback(oRef); // Execute callback function
+			}
+	
+	
+			return {
+				uid: cacheDOM.uid,
+				template: defaults.template,
+				ele: defaults.ele
+			};
+		}
 
-        var keys = Object.keys(defaults.data);
-        var html = fetchHTML(defaults.template);
-        var template = html;
-        var arrValues = getValues(html);
-        var i, j;
-
-        var cacheDOM = cachedDOM(uid, defaults.root, defaults.ele, defaults.template);
-
-        //Set the data value for dom element
-        for (i = 0; i < arrValues.length; i++) {
-            for (j = 0; j < keys.length; j++) {
-                if (arrValues[i] === keys[j]) {
-                    html = html.replace("{" + keys[j] + "}", defaults.data[keys[j]]);
-                }
-            }
-        }
-
-        //Remove Hidden Element if it exists in the DOM
-        $("#templateBuilder").remove();
-
-        var hiddenEle = $("body").append("<div id='templateBuilder' style='display:none;'></div>");
-        var ele = [];
-        var arrEl = [];
         
-        if (defaults.ele instanceof Array) {
-            for (i = 0; i < defaults.ele.length; i++) {
-                if (defaults.ele[i].charAt(0) === "#" || defaults.ele[i].charAt(0) === ".") {
-                    arrEl = $("#templateBuilder").html(html).find(defaults.ele[i]); //Insert into the dom
-                    arrEl.first().attr("uid", cacheDOM.uid);
-                    ele.push(arrEl[0]);
-                } else {
-                    console.error("Error: Incorrect reference - pass class or id only.");
-                }
-            }
-        } else {
-            if (defaults.ele.charAt(0) === "#" || defaults.ele.charAt(0) === ".") {
-                ele = $("#templateBuilder").html(html).find(defaults.ele); //Insert into the dom
-                ele.first().attr("uid", cacheDOM.uid);
-            } else {
-                console.error("Error: Incorrect reference - pass class or id only.");
-            }
-        }
-
-
-        if (defaults.mode === "insert") {
-            $(defaults.root).html(ele);
-        } else {
-            $(defaults.root).append(ele);
-        }
-        
-        var oRef = {
-            uid: ("[uid='" + cacheDOM.uid + "']"),
-            template: defaults.template,
-            ele: defaults.ele
-        };
-
-        if (typeof callback === "function") {
-            callback(oRef); // Execute callback function
-        }
-
-
-        return {
-            uid: cacheDOM.uid,
-            template: defaults.template,
-            ele: defaults.ele
-        };
 
     };
+	
+	//Add Multiple Elements
+	addElements = function (options, callback) {
+		var defaults = {
+            root: options.root || "body",
+            ele: options.ele || "",
+            template: options.template || "",
+            animate: options.animate || "slide",
+            mode: options.mode || "append"
+        };
+		var i;
+		
+		for (i = 0; i < options.data.length; i++) {
+			defaults.data = options.data[i];
+			if (i === options.data.length - 1) {
+				add(defaults, callback);
+			} else {
+				add(defaults);
+			}
+		}
+	};
 
     //Get cached data
-    var cache = function () {
+    cache = function () {
         return cachedDOM.cache;
     };
 
     //Remove from the dom but will not be removed from cache
-    var remove = function (options, callback) {
+    remove = function (options, callback) {
 
         var defaults = {
             root: options.root || "body",
@@ -217,7 +247,7 @@
     };
 
     //Destroy the element from dom
-    var destroy = function (options, callback) {
+    destroy = function (options, callback) {
 
         var defaults = {
             root: options.root || "body",
@@ -274,3 +304,5 @@
     return yo.utils.template;
 
 }(window, document, undefined));
+
+
