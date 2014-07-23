@@ -1,3 +1,4 @@
+
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, indent: 4, maxerr: 50 */
 /*global require, yo, define, brackets: true, $, jQuery, window, document, navigator*/
 
@@ -114,7 +115,7 @@
 		if (defaults.data instanceof Array) {
 			addElements(options, callback);
 		} else {
-			var uid = (new Date()).getTime();
+			var uid = (new Date()).getTime() + Math.floor((Math.random() * 1000));
 
 			var keys = Object.keys(defaults.data);
 			var html = fetchHTML(defaults.template);
@@ -144,7 +145,7 @@
 				for (i = 0; i < defaults.ele.length; i++) {
 					if (defaults.ele[i].charAt(0) === "#" || defaults.ele[i].charAt(0) === ".") {
 						arrEl = $("#templateBuilder").html(html).find(defaults.ele[i]); //Insert into the dom
-						arrEl.first().attr("uid", cacheDOM.uid);
+						arrEl.first().attr("uid", uid);
 						ele.push(arrEl[0]);
 					} else {
 						console.error("Error: Incorrect reference - pass class or id only.");
@@ -153,7 +154,7 @@
 			} else {
 				if (defaults.ele.charAt(0) === "#" || defaults.ele.charAt(0) === ".") {
 					ele = $("#templateBuilder").html(html).find(defaults.ele); //Insert into the dom
-					ele.first().attr("uid", cacheDOM.uid);
+					ele.first().attr("uid", uid);
 				} else {
 					console.error("Error: Incorrect reference - pass class or id only.");
 				}
@@ -167,7 +168,7 @@
 			}
 			
 			var oRef = {
-				uid: ("[uid='" + cacheDOM.uid + "']"),
+				uid: ("[uid='" + uid + "']"),
 				template: defaults.template,
 				ele: defaults.ele
 			};
