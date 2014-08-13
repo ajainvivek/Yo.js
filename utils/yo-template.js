@@ -30,7 +30,7 @@
     };
 
     //Cache the dom reference
-    cachedDOM = function (uid, root, ele, template) {
+    cachedDOM = function (uid, ele, template) {
 
         var cacheObj = {
             uid: uid,
@@ -39,25 +39,13 @@
         };
         
         var cacheId = cacheObj.uid;
-        var setCache = true;
         var i;
         
         cachedDOM.cache = cachedDOM.cache || {};
 
-        if (cachedDOM.cache[root] === null || cachedDOM.cache[root] === undefined) {
-            cachedDOM.cache[root] = [];
-        } else {
-            for (i = 0; i < cachedDOM.cache[root].length; i++) {
-                if (cachedDOM.cache[root][i].ele === ele) {
-                    cacheId = cachedDOM.cache[root][i].uid;
-                    setCache = false;
-                }
-            }
-        }
-
-        if (setCache) {
-            cachedDOM.cache[root].push(cacheObj);
-        }
+        if (cachedDOM.cache[ele] === null || cachedDOM.cache[ele] === undefined) {
+            cachedDOM.cache[ele] = cacheObj;
+        } 
         
         return {
             uid : cacheId
@@ -102,7 +90,7 @@
 
     //Add the element on to the dom
     add = function (options, callback) {
-
+		
         var defaults = {
             root: options.root || "body",
             ele: options.ele || "",
@@ -116,14 +104,14 @@
 			addElements(options, callback);
 		} else {
 			var uid = (new Date()).getTime() + Math.floor((Math.random() * 1000));
-
+			var cachedTemplate = cache() || {};
 			var keys = Object.keys(defaults.data);
-			var html = fetchHTML(defaults.template);
+			var html = (cachedTemplate[defaults.ele] === undefined) ? fetchHTML(defaults.template) : cachedTemplate[defaults.ele].template;
 			var template = html;
 			var arrValues = getValues(html);
 			var i, j;
 	
-			var cacheDOM = cachedDOM(uid, defaults.root, defaults.ele, defaults.template);
+			var cacheDOM = cachedDOM(uid, defaults.ele, template);
 	
 			//Set the data value for dom element
 			for (i = 0; i < arrValues.length; i++) {
@@ -133,18 +121,16 @@
 					}
 				}
 			}
-	
-			//Remove Hidden Element if it exists in the DOM
-			$("#templateBuilder").remove();
-	
-			var hiddenEle = $("body").append("<div id='templateBuilder' style='display:none;'></div>");
+			
+			var blockWrapper = "<div class='yo-wrapper' async></div>";
+			var hiddenEle = $(blockWrapper).append("<div id='templateBuilder' style='display:none;' async></div>");
 			var ele = [];
 			var arrEl = [];
 			
 			if (defaults.ele instanceof Array) {
 				for (i = 0; i < defaults.ele.length; i++) {
 					if (defaults.ele[i].charAt(0) === "#" || defaults.ele[i].charAt(0) === ".") {
-						arrEl = $("#templateBuilder").html(html).find(defaults.ele[i]); //Insert into the dom
+						arrEl = hiddenEle.find("#templateBuilder").html(html).find(defaults.ele[i]); //Insert into the dom
 						arrEl.first().attr("uid", uid);
 						ele.push(arrEl[0]);
 					} else {
@@ -153,7 +139,7 @@
 				}
 			} else {
 				if (defaults.ele.charAt(0) === "#" || defaults.ele.charAt(0) === ".") {
-					ele = $("#templateBuilder").html(html).find(defaults.ele); //Insert into the dom
+					ele = hiddenEle.find("#templateBuilder").html(html).find(defaults.ele); //Insert into the dom
 					ele.first().attr("uid", uid);
 				} else {
 					console.error("Error: Incorrect reference - pass class or id only.");
